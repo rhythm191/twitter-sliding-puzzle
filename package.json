@@ -1,0 +1,43 @@
+{
+  "name": "twitter-slide-pazzle",
+  "version": "1.0.0",
+  "description": "twitter-slide-pazzle",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhythm191/twitter-slide-pazzle.git"
+  },
+  "keywords": [],
+  "author": "rhythm191",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhythm191/twitter-slide-pazzle/issues"
+  },
+  "homepage": "https://github.com/rhythm191/twitter-slide-pazzle#readme",
+  "dependencies": {
+    "isomorphic-unfetch": "3.0.0",
+    "next": "^9.2.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.5",
+    "typescript": "^3.7.5",
+    "typescript-fsa": "^3.0.0",
+    "typescript-fsa-reducers": "^1.2.1",
+    "uuid": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.5.0",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-redux": "^7.1.6",
+    "@types/redux": "^3.6.0",
+    "@types/uuid": "^3.4.6"
+  }
+}

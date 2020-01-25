@@ -1,6 +1,6 @@
-# Twitter Slide Pazzle
+# Twitter Sliding Puzzle
 
-Slide pazzle application to use twitter images.
+Sliding puzzle application to use twitter images.
 
 ## Development
 

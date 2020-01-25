@@ -1,7 +1,7 @@
 {
-  "name": "twitter-slide-pazzle",
+  "name": "twitter-sliding-puzzle",
   "version": "1.0.0",
-  "description": "twitter-slide-pazzle",
+  "description": "twitter-sliding-puzzle",
   "main": "index.js",
   "scripts": {
     "dev": "next",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rhythm191/twitter-slide-pazzle.git"
+    "url": "git+https://github.com/rhythm191/twitter-sliding-puzzle.git"
   },
   "keywords": [],
   "author": "rhythm191",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rhythm191/twitter-slide-pazzle/issues"
+    "url": "https://github.com/rhythm191/twitter-sliding-puzzle/issues"
   },
-  "homepage": "https://github.com/rhythm191/twitter-slide-pazzle#readme",
+  "homepage": "https://github.com/rhythm191/twitter-sliding-puzzle#readme",
   "dependencies": {
     "isomorphic-unfetch": "3.0.0",
     "next": "^9.2.1",

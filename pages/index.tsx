@@ -4,8 +4,8 @@ import { NextPage } from "next";
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Home | Twitter Slide Pazzle">
-      <h1>Twitter Slide Pazzle</h1>
+    <Layout title="Home | Twitter Sliding Puzzle">
+      <h1>Twitter Sliding Puzzle</h1>
       <p>Twitterの投稿画像で遊ぶパズルゲームです。</p>
     </Layout>
   );

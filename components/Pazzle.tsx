@@ -30,6 +30,8 @@ const Pazzle: React.FunctionComponent<Props> = ({ bgImage }) => {
         <Piece
           key={position.id}
           bgImage={bgImage}
+          bgX={position.x * 209 * -1}
+          bgY={position.y * 280 * -1}
           x={position.x}
           y={position.y}
           width={209}

@@ -1,12 +1,13 @@
 import * as React from "react";
 import Layout from "../components/Layout";
+import Pazzle from "../components/Pazzle";
 import { NextPage } from "next";
 
 const IndexPage: NextPage = () => {
   return (
     <Layout title="Home | Twitter Sliding Puzzle">
-      <h1>Twitter Sliding Puzzle</h1>
-      <p>Twitterの投稿画像で遊ぶパズルゲームです。</p>
+      {/* この辺にコマンドを乗っける */}
+      <Pazzle bgImage="/sample.jpeg" />
     </Layout>
   );
 };

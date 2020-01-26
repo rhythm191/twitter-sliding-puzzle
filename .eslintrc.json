@@ -10,7 +10,8 @@
   "plugins": [
       "@typescript-eslint",
       "react",
-      "prettier"
+      "prettier",
+      "emotion"
   ],
   "parser": "@typescript-eslint/parser",
   "env": {

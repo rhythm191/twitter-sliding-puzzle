@@ -2,6 +2,7 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 import * as actions from "../actions/pieces";
 import { Piece } from "../types/piece";
 import uuid from "uuid/v4";
+import { indexToPosition } from "../utils/position";
 
 export interface PiecesState {
   pieceNum: number;
@@ -26,11 +27,19 @@ export const piecesReducer = reducerWithInitialState(initialState)
             x: w,
             y: h,
           },
+          position: {
+            x: w,
+            y: h,
+          },
           missing: false,
           slideTo: undefined,
         });
       }
     }
+
+    // ランダムに空白をつける
+    const missingIndex = Math.floor(Math.random() * state.pieceNum);
+    pieces[missingIndex].missing = true;
 
     return {
       ...state,
@@ -49,7 +58,10 @@ export const piecesReducer = reducerWithInitialState(initialState)
 
     return {
       ...state,
-      pieces: indexes.map(index => state.pieces[index]),
+      pieces: indexes.map((index, nextIndex) => ({
+        ...state.pieces[index],
+        position: indexToPosition(nextIndex, state.pieceNum),
+      })),
     };
   })
   .case(actions.slide, (state, payload) => {

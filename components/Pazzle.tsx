@@ -6,14 +6,7 @@ import * as actions from "../actions/puzzle";
 import { css, jsx } from "@emotion/core";
 import Piece from "./Piece";
 import { AppState } from "../store";
-import { indexToPosition } from "../utils/position";
-
-const puzzleStyle = css`
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: 90vh;
-`;
+import { PazzuleState } from "../reducers/puzzle";
 
 const mapStateToProps = (state: AppState) => {
   return state;
@@ -31,31 +24,28 @@ interface PuzzleHandler {
 
 type Props = AppState & PuzzleHandler;
 
-// 209 x 280
+const puzzleStyle = (puzzle: PazzuleState) => css`
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 90vh;
+  & div {
+    background-image: url(${puzzle.imageUrl});
+    background-size: ${puzzle.canvas.width}px ${puzzle.canvas.height}px;
+  }
+`;
+
 const Pazzle: React.FunctionComponent<Props> = ({ puzzle, pieces }) => {
   const pieceSize = {
     width: puzzle.canvas.width / Math.sqrt(pieces.pieceNum),
     height: puzzle.canvas.height / Math.sqrt(pieces.pieceNum),
   };
 
-  const piecesTags = pieces.pieces.map((piece, index) => {
-    // console.log(piece);
-    const position = indexToPosition(index, pieces.pieceNum);
+  const piecesTags = pieces.pieces.map(piece => (
+    <Piece key={piece.id} piece={piece} pieceSize={pieceSize} />
+  ));
 
-    return (
-      <Piece
-        key={piece.id}
-        bgImage={puzzle.imageUrl}
-        bgX={piece.originPosition.x * pieceSize.width * -1}
-        bgY={piece.originPosition.y * pieceSize.height * -1}
-        x={position.x}
-        y={position.y}
-        pieceSize={pieceSize}
-      />
-    );
-  });
-
-  return <div css={puzzleStyle}>{piecesTags}</div>;
+  return <div css={puzzleStyle(puzzle)}>{piecesTags}</div>;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pazzle);

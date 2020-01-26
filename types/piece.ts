@@ -8,6 +8,7 @@ export interface Position {
 export interface Piece {
   id: string;
   originPosition: Position;
+  position: Position;
   missing: boolean;
   slideTo: number | undefined;
 }

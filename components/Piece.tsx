@@ -17,6 +17,7 @@ const Component: React.FunctionComponent<Props> = ({ piece, pieceSize }) => {
 
   return (
     <div
+      className={piece.missing ? "piece piece--missing" : "piece"}
       css={css`
         box-sizing: border-box;
         position: absolute;
@@ -27,6 +28,7 @@ const Component: React.FunctionComponent<Props> = ({ piece, pieceSize }) => {
         height: ${pieceSize.height}px;
         border: 2px solid #333;
         transition: all 0.5s ease-out;
+        ${piece.missing ? "" : "z-index: 10; border: 2px solid #333;"}
 
         cursor: pointer;
       `}

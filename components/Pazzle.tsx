@@ -29,9 +29,13 @@ const puzzleStyle = (puzzle: PazzuleState) => css`
   width: 100%;
   max-width: 100%;
   height: 90vh;
-  & div {
+  & .piece {
     background-image: url(${puzzle.imageUrl});
     background-size: ${puzzle.canvas.width}px ${puzzle.canvas.height}px;
+  }
+
+  & .piece.piece--missing {
+    background: none;
   }
 `;
 

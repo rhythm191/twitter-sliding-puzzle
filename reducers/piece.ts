@@ -13,7 +13,7 @@ const initialState: PiecesState = {
   pieces: [],
 };
 
-export const counterReducer = reducerWithInitialState(initialState)
+export const piecesReducer = reducerWithInitialState(initialState)
   .case(actions.initPieces, state => {
     const length = Math.sqrt(state.pieceNum);
     const pieces: Piece[] = [];

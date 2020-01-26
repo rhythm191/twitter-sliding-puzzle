@@ -1,7 +1,12 @@
 /** @jsx jsx */
 import * as React from "react";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import * as actions from "../actions/puzzle";
 import { css, jsx } from "@emotion/core";
 import Piece from "./Piece";
+import { AppState } from "../store";
+import { indexToPosition } from "../utils/position";
 
 const puzzleStyle = css`
   position: relative;
@@ -10,36 +15,47 @@ const puzzleStyle = css`
   height: 90vh;
 `;
 
-type Props = {
-  bgImage: string;
+const mapStateToProps = (state: AppState) => {
+  return state;
 };
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    handleSetImage: (imageUrl: string) => dispatch(actions.setImage(imageUrl)),
+  };
+};
+
+interface PuzzleHandler {
+  handleSetImage(imageUrl: string): void;
+}
+
+type Props = AppState & PuzzleHandler;
 
 // 209 x 280
-const Pazzle: React.FunctionComponent<Props> = ({ bgImage }) => {
-  const positions = [];
+const Pazzle: React.FunctionComponent<Props> = ({ puzzle, pieces }) => {
+  const pieceSize = {
+    width: puzzle.canvas.width / Math.sqrt(pieces.pieceNum),
+    height: puzzle.canvas.height / Math.sqrt(pieces.pieceNum),
+  };
 
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      positions.push({ id: i * 100 + j, x: j, y: i });
-    }
-  }
+  const piecesTags = pieces.pieces.map((piece, index) => {
+    // console.log(piece);
+    const position = indexToPosition(index, pieces.pieceNum);
 
-  return (
-    <div css={puzzleStyle}>
-      {positions.map(position => (
-        <Piece
-          key={position.id}
-          bgImage={bgImage}
-          bgX={position.x * 209 * -1}
-          bgY={position.y * 280 * -1}
-          x={position.x}
-          y={position.y}
-          width={209}
-          height={280}
-        />
-      ))}
-    </div>
-  );
+    return (
+      <Piece
+        key={piece.id}
+        bgImage={puzzle.imageUrl}
+        bgX={piece.originPosition.x * pieceSize.width * -1}
+        bgY={piece.originPosition.y * pieceSize.height * -1}
+        x={position.x}
+        y={position.y}
+        pieceSize={pieceSize}
+      />
+    );
+  });
+
+  return <div css={puzzleStyle}>{piecesTags}</div>;
 };
 
-export default Pazzle;
+export default connect(mapStateToProps, mapDispatchToProps)(Pazzle);

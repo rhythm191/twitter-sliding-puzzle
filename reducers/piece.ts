@@ -14,42 +14,6 @@ const initialState: PiecesState = {
   pieces: [],
 };
 
-// スライド情報を付与する関数
-function grandSlideTo(pieces: Piece[]): void {
-  pieces.forEach(piece => (piece.slideTo = undefined));
-
-  const missingIndex = pieces.findIndex(piece => piece.missing);
-  const puzzleLength = Math.sqrt(pieces.length);
-
-  if (
-    missingIndex - 1 >= 0 &&
-    pieces[missingIndex - 1].position.y == pieces[missingIndex].position.y
-  ) {
-    pieces[missingIndex - 1].slideTo = { src: missingIndex - 1, dest: missingIndex };
-  }
-
-  if (
-    missingIndex + 1 < pieces.length &&
-    pieces[missingIndex + 1].position.y == pieces[missingIndex].position.y
-  ) {
-    pieces[missingIndex + 1].slideTo = { src: missingIndex + 1, dest: missingIndex };
-  }
-
-  if (missingIndex - puzzleLength >= 0) {
-    pieces[missingIndex - puzzleLength].slideTo = {
-      src: missingIndex - puzzleLength,
-      dest: missingIndex,
-    };
-  }
-
-  if (missingIndex + puzzleLength < pieces.length) {
-    pieces[missingIndex + puzzleLength].slideTo = {
-      src: missingIndex + puzzleLength,
-      dest: missingIndex,
-    };
-  }
-}
-
 export const piecesReducer = reducerWithInitialState(initialState)
   .case(actions.initPieces, state => {
     const pieces: Piece[] = [];
@@ -134,15 +98,12 @@ export const piecesReducer = reducerWithInitialState(initialState)
       pieces: pieces,
     };
   })
-  .case(actions.slide, (state, payload) => {
+  .case(actions.swap, (state, payload) => {
     const newPieces = [...state.pieces];
     newPieces[payload.src] = state.pieces[payload.dest];
     newPieces[payload.dest] = state.pieces[payload.src];
     newPieces[payload.src].position = indexToPosition(payload.src, state.pieceNum);
     newPieces[payload.dest].position = indexToPosition(payload.dest, state.pieceNum);
-
-    // 移動可能情報を更新
-    grandSlideTo(newPieces);
 
     return {
       ...state,

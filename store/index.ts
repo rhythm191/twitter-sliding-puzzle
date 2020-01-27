@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { PazzuleState, puzzleReducer } from "../reducers/puzzle";
 import { PiecesState, piecesReducer } from "../reducers/piece";
-import puzzleSaga from "../sagas/puzzle";
+import rootSaga from "../sagas";
 
 export type AppState = {
   puzzle: PazzuleState;
@@ -17,6 +17,6 @@ const reducer = combineReducers<AppState>({
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore(reducer, applyMiddleware(sagaMiddleware));
-  sagaMiddleware.run(puzzleSaga);
+  sagaMiddleware.run(rootSaga);
   return store;
 }

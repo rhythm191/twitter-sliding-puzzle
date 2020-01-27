@@ -8,10 +8,12 @@ const baseStyle = css`
   position: absolute;
   border: 2px solid #ccc;
   transition: left 0.2s ease-out, top 0.2s ease-out;
+  z-index: 10;
 
   &.piece--missing {
     background: none;
     border: none;
+    z-index: 0;
   }
 
   &.piece--slidable {
@@ -50,8 +52,6 @@ const Component: React.FunctionComponent<Props> = ({ piece, pieceSize, handleSli
         top: ${piece.position.y * pieceSize.height}px;
         width: ${pieceSize.width}px;
         height: ${pieceSize.height}px;
-        ${piece.missing ? "" : "z-index: 10;"}
-        ${piece.slideTo ? "" : "cursor: pointer;"}
       `}
       onClick={() => piece.slideTo && handleSlideTo(piece.slideTo)}
     ></div>

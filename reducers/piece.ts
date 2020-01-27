@@ -15,7 +15,7 @@ const initialState: PiecesState = {
 };
 
 // スライド情報を付与する関数
-function grandSlideTo(pieces: Piece[]) {
+function grandSlideTo(pieces: Piece[]): void {
   pieces.forEach(piece => (piece.slideTo = undefined));
 
   const missingIndex = pieces.findIndex(piece => piece.missing);
@@ -63,12 +63,6 @@ export const piecesReducer = reducerWithInitialState(initialState)
         slideTo: undefined,
       });
     }
-    // ランダムに空白をつける
-    const missingIndex = Math.floor(Math.random() * state.pieceNum);
-    pieces[missingIndex].missing = true;
-
-    // 移動可能情報を追加
-    grandSlideTo(pieces);
 
     return {
       ...state,
@@ -85,12 +79,59 @@ export const piecesReducer = reducerWithInitialState(initialState)
       indexes[r] = tmp;
     }
 
+    const newPieces = indexes.map((index, nextIndex) => ({
+      ...state.pieces[index],
+      position: indexToPosition(nextIndex, state.pieceNum),
+      missing: false,
+    }));
+
+    // ランダムに空白をつける
+    const missingIndex = Math.floor(Math.random() * state.pieceNum);
+    newPieces[missingIndex].missing = true;
+
     return {
       ...state,
-      pieces: indexes.map((index, nextIndex) => ({
-        ...state.pieces[index],
-        position: indexToPosition(nextIndex, state.pieceNum),
-      })),
+      pieces: newPieces,
+    };
+  })
+  .case(actions.grantSlidable, state => {
+    const pieces = state.pieces;
+
+    pieces.forEach(piece => (piece.slideTo = undefined));
+
+    const missingIndex = pieces.findIndex(piece => piece.missing);
+    const puzzleLength = Math.sqrt(state.pieceNum);
+
+    if (
+      missingIndex - 1 >= 0 &&
+      pieces[missingIndex - 1].position.y == pieces[missingIndex].position.y
+    ) {
+      pieces[missingIndex - 1].slideTo = { src: missingIndex - 1, dest: missingIndex };
+    }
+
+    if (
+      missingIndex + 1 < pieces.length &&
+      pieces[missingIndex + 1].position.y == pieces[missingIndex].position.y
+    ) {
+      pieces[missingIndex + 1].slideTo = { src: missingIndex + 1, dest: missingIndex };
+    }
+
+    if (missingIndex - puzzleLength >= 0) {
+      pieces[missingIndex - puzzleLength].slideTo = {
+        src: missingIndex - puzzleLength,
+        dest: missingIndex,
+      };
+    }
+
+    if (missingIndex + puzzleLength < pieces.length) {
+      pieces[missingIndex + puzzleLength].slideTo = {
+        src: missingIndex + puzzleLength,
+        dest: missingIndex,
+      };
+    }
+    return {
+      ...state,
+      pieces: pieces,
     };
   })
   .case(actions.slide, (state, payload) => {

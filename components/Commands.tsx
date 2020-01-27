@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import * as actions from "../actions/pieces";
+import * as actions from "../actions/puzzle";
 import { css, jsx } from "@emotion/core";
 import { AppState } from "../store";
 
@@ -16,8 +16,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    handleinitPieces: () => dispatch(actions.initPieces()),
-    handleRandom: () => dispatch(actions.random()),
+    handleinitPieces: () => dispatch(actions.init()),
+    handleRandom: () => dispatch(actions.setRandom()),
   };
 };
 

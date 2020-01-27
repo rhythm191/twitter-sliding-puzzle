@@ -58,6 +58,29 @@ export const piecesReducer = reducerWithInitialState(initialState)
       pieces: newPieces,
     };
   })
+  .case(actions.debugRandom, state => {
+    const newPieces = [...state.pieces];
+    newPieces[0].missing = true;
+
+    newPieces[0] = state.pieces[1];
+    newPieces[1] = state.pieces[0];
+    newPieces[0].position = indexToPosition(0, state.pieceNum);
+    newPieces[1].position = indexToPosition(1, state.pieceNum);
+
+    return {
+      ...state,
+      pieces: newPieces,
+    };
+  })
+  .case(actions.resetSlideGrant, state => {
+    return {
+      ...state,
+      pieces: state.pieces.map(piece => {
+        piece.slideTo = undefined;
+        return piece;
+      }),
+    };
+  })
   .case(actions.grantSlidable, state => {
     const pieces = state.pieces;
 
@@ -108,5 +131,14 @@ export const piecesReducer = reducerWithInitialState(initialState)
     return {
       ...state,
       pieces: newPieces,
+    };
+  })
+  .case(actions.complete, state => {
+    return {
+      ...state,
+      pieces: state.pieces.map(piece => {
+        piece.missing = false;
+        return piece;
+      }),
     };
   });

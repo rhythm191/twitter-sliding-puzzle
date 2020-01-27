@@ -18,18 +18,25 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     handleinitPieces: () => dispatch(actions.init()),
     handleRandom: () => dispatch(actions.setRandom()),
+    handleDebugInit: () => dispatch(actions.debugInit()),
   };
 };
 
 interface CommandHandler {
   handleinitPieces(): void;
   handleRandom(): void;
+  handleDebugInit(): void;
 }
 
 type Props = AppState & CommandHandler;
 
-const Commands: React.FunctionComponent<Props> = ({ handleinitPieces, handleRandom }) => (
+const Commands: React.FunctionComponent<Props> = ({
+  handleinitPieces,
+  handleRandom,
+  handleDebugInit,
+}) => (
   <div css={commandStyle}>
+    <button onClick={handleDebugInit}>デバッグ初期化</button>
     <button onClick={handleinitPieces}>初期化</button>
     <button onClick={handleRandom}>ランダム</button>
   </div>

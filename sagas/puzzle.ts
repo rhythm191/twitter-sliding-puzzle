@@ -8,6 +8,12 @@ function* initializePuzzle() {
   yield put(piecesAction.grantSlidable());
 }
 
+function* initializeDebugPuzzle() {
+  yield put(piecesAction.initPieces());
+  yield put(piecesAction.debugRandom());
+  yield put(piecesAction.grantSlidable());
+}
+
 function* setRandomPuzzle() {
   yield put(piecesAction.random());
   yield put(piecesAction.grantSlidable());
@@ -15,5 +21,6 @@ function* setRandomPuzzle() {
 
 export default function* puzzleSaga() {
   yield takeEvery(puzzleAction.init.type, initializePuzzle);
+  yield takeEvery(puzzleAction.debugInit.type, initializeDebugPuzzle);
   yield takeEvery(puzzleAction.setRandom.type, setRandomPuzzle);
 }

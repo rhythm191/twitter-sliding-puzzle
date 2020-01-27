@@ -11,6 +11,7 @@ export interface PazzuleState {
     width: number;
     height: number;
   };
+  complete: boolean;
 }
 
 const initialState: PazzuleState = {
@@ -23,11 +24,11 @@ const initialState: PazzuleState = {
     width: 627,
     height: 840,
   },
+  complete: false,
 };
 
-export const puzzleReducer = reducerWithInitialState(initialState).case(
-  actions.setImage,
-  (state, payload) => {
+export const puzzleReducer = reducerWithInitialState(initialState)
+  .case(actions.setImage, (state, payload) => {
     const img = new Image();
     img.src = payload;
 
@@ -40,6 +41,12 @@ export const puzzleReducer = reducerWithInitialState(initialState).case(
       ...state,
       imageUrl: payload,
       imageSize,
+      complete: false,
     };
-  }
-);
+  })
+  .case(actions.complete, state => {
+    return {
+      ...state,
+      complete: true,
+    };
+  });

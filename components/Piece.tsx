@@ -6,11 +6,14 @@ import { Piece, SlideTo } from "../types/piece";
 const baseStyle = css`
   box-sizing: border-box;
   position: absolute;
+  top: 0;
+  left: 0;
   border: 2px solid #ccc;
-  transition: left 0.2s ease-out, top 0.2s ease-out;
+  transition: transform 0.2s ease-out;
   z-index: 10;
 
   &.piece--missing {
+    transition: none;
     background: none;
     border: none;
     z-index: 0;
@@ -48,8 +51,10 @@ const Component: React.FunctionComponent<Props> = ({ piece, pieceSize, handleSli
       css={css`
         ${baseStyle};
         background-position: ${bgX}px ${bgY}px;
-        left: ${piece.position.x * pieceSize.width}px;
-        top: ${piece.position.y * pieceSize.height}px;
+        transform: translate(
+          ${piece.position.x * pieceSize.width}px,
+          ${piece.position.y * pieceSize.height}px
+        );
         width: ${pieceSize.width}px;
         height: ${pieceSize.height}px;
       `}

@@ -52,27 +52,17 @@ function grandSlideTo(pieces: Piece[]) {
 
 export const piecesReducer = reducerWithInitialState(initialState)
   .case(actions.initPieces, state => {
-    const length = Math.sqrt(state.pieceNum);
     const pieces: Piece[] = [];
 
-    for (let h = 0; h < length; h++) {
-      for (let w = 0; w < length; w++) {
-        pieces.push({
-          id: uuid(),
-          originPosition: {
-            x: w,
-            y: h,
-          },
-          position: {
-            x: w,
-            y: h,
-          },
-          missing: false,
-          slideTo: undefined,
-        });
-      }
+    for (let i = 0; i < state.pieceNum; i++) {
+      pieces.push({
+        id: uuid(),
+        originPosition: indexToPosition(i, state.pieceNum),
+        position: indexToPosition(i, state.pieceNum),
+        missing: false,
+        slideTo: undefined,
+      });
     }
-
     // ランダムに空白をつける
     const missingIndex = Math.floor(Math.random() * state.pieceNum);
     pieces[missingIndex].missing = true;

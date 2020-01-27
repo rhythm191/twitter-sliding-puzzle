@@ -5,10 +5,15 @@ export interface Position {
   y: number;
 }
 
+export interface SlideTo {
+  src: number;
+  dest: number;
+}
+
 export interface Piece {
   id: string;
   originPosition: Position;
   position: Position;
   missing: boolean;
-  slideTo: number | undefined;
+  slideTo: SlideTo | undefined;
 }

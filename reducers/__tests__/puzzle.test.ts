@@ -1,7 +1,7 @@
-import { puzzleReducer as reducer } from "../puzzle";
+import { puzzleReducer as reducer, PuzzuleState } from "../puzzle";
 import * as actions from "../../actions/puzzle";
 
-const initialState: PazzuleState = {
+const initialState: PuzzuleState = {
   imageUrl: "http://localhost:3000/sample.jpeg",
   imageSize: {
     width: 1536,

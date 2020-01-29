@@ -1,7 +1,7 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import * as actions from "../actions/puzzle";
 
-export interface PazzuleState {
+export interface PuzzuleState {
   imageUrl: string;
   imageSize: {
     width: number;
@@ -14,7 +14,7 @@ export interface PazzuleState {
   complete: boolean;
 }
 
-const initialState: PazzuleState = {
+const initialState: PuzzuleState = {
   imageUrl: "http://localhost:3000/sample.jpeg",
   imageSize: {
     width: 1536,

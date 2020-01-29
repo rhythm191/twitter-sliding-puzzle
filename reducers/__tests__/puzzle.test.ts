@@ -15,7 +15,7 @@ const initialState: PuzzleState = {
 };
 
 describe("complete", () => {
-  test("complete flag is true", () => {
+  it("complete flag is true", () => {
     const state = reducer(initialState, actions.complete);
     expect(state.complete).toEqual(true);
   });

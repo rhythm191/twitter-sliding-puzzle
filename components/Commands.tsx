@@ -30,7 +30,7 @@ interface CommandHandler {
 
 type Props = AppState & CommandHandler;
 
-const Commands: React.FunctionComponent<Props> = ({
+export const Commands: React.FunctionComponent<Props> = ({
   handleinitPieces,
   handleRandom,
   handleDebugInit,

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Layout from "../components/Layout";
-import Pazzle from "../components/Pazzle";
+import Puzzle from "../components/Puzzle";
 import { NextPage } from "next";
 import configureStore from "../store";
 import { Provider } from "react-redux";
@@ -13,7 +13,7 @@ const IndexPage: NextPage = () => {
     <Provider store={store}>
       <Layout title="Home | Twitter Sliding Puzzle">
         <Commands />
-        <Pazzle />
+        <Puzzle />
       </Layout>
     </Provider>
   );

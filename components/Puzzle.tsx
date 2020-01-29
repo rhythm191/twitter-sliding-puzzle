@@ -7,7 +7,7 @@ import * as pieseActions from "../actions/pieces";
 import { css, jsx } from "@emotion/core";
 import Piece from "./Piece";
 import { AppState } from "../store";
-import { PazzuleState } from "../reducers/puzzle";
+import { PuzzleState } from "../reducers/puzzle";
 import { SlideTo } from "../types/piece";
 
 const mapStateToProps = (state: AppState): AppState => {
@@ -28,7 +28,7 @@ interface PuzzleHandler {
 
 type Props = AppState & PuzzleHandler;
 
-const puzzleStyle = (puzzle: PazzuleState) => css`
+const puzzleStyle = (puzzle: PuzzleState) => css`
   position: relative;
   width: 100%;
   max-width: 100%;
@@ -39,7 +39,7 @@ const puzzleStyle = (puzzle: PazzuleState) => css`
   }
 `;
 
-const Pazzle: React.FunctionComponent<Props> = ({ puzzle, pieces, handleSlideTo }) => {
+const Puzzle: React.FunctionComponent<Props> = ({ puzzle, pieces, handleSlideTo }) => {
   const pieceSize = {
     width: puzzle.canvas.width / Math.sqrt(pieces.pieceNum),
     height: puzzle.canvas.height / Math.sqrt(pieces.pieceNum),
@@ -52,4 +52,4 @@ const Pazzle: React.FunctionComponent<Props> = ({ puzzle, pieces, handleSlideTo 
   return <div css={puzzleStyle(puzzle)}>{piecesTags}</div>;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pazzle);
+export default connect(mapStateToProps, mapDispatchToProps)(Puzzle);

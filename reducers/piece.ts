@@ -60,12 +60,12 @@ export const piecesReducer = reducerWithInitialState(initialState)
   })
   .case(actions.debugRandom, state => {
     const newPieces = [...state.pieces];
-    newPieces[0].missing = true;
-
     newPieces[0] = state.pieces[1];
     newPieces[1] = state.pieces[0];
     newPieces[0].position = indexToPosition(0, state.pieceNum);
     newPieces[1].position = indexToPosition(1, state.pieceNum);
+
+    newPieces[0].missing = true;
 
     return {
       ...state,

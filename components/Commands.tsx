@@ -4,15 +4,10 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../actions/puzzle";
 import { css, jsx } from "@emotion/core";
-import { AppState } from "../store";
 
 const commandStyle = css`
   display: block;
 `;
-
-const mapStateToProps = (state: AppState) => {
-  return state;
-};
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
@@ -28,7 +23,7 @@ interface CommandHandler {
   handleDebugInit(): void;
 }
 
-type Props = AppState & CommandHandler;
+type Props = CommandHandler;
 
 export const Commands: React.FunctionComponent<Props> = ({
   handleinitPieces,
@@ -42,4 +37,4 @@ export const Commands: React.FunctionComponent<Props> = ({
   </div>
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Commands);
+export default connect(null, mapDispatchToProps)(Commands);

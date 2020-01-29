@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import { css, jsx } from "@emotion/core";
-import { Piece, SlideTo } from "../types/piece";
+import { Piece as PieceType, SlideTo } from "../types/piece";
 
 const baseStyle = css`
   box-sizing: border-box;
@@ -29,7 +29,7 @@ const baseStyle = css`
 `;
 
 type Props = {
-  piece: Piece;
+  piece: PieceType;
   pieceSize: {
     width: number;
     height: number;
@@ -37,7 +37,7 @@ type Props = {
   handleSlideTo: (slideTo: SlideTo) => void | undefined;
 };
 
-const Component: React.FunctionComponent<Props> = ({ piece, pieceSize, handleSlideTo }) => {
+export const Piece: React.FunctionComponent<Props> = ({ piece, pieceSize, handleSlideTo }) => {
   const bgX = piece.originPosition.x * pieceSize.width * -1;
   const bgY = piece.originPosition.y * pieceSize.height * -1;
 
@@ -63,4 +63,4 @@ const Component: React.FunctionComponent<Props> = ({ piece, pieceSize, handleSli
   );
 };
 
-export default Component;
+export default Piece;

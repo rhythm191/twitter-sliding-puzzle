@@ -36,7 +36,7 @@ const Layout: React.FunctionComponent<Props> = ({ children, title = "Twitter Sli
     </Head>
     <header>
       <h1>Twitter Sliding Puzzle</h1>
-      <p>Twitterの投稿画像で遊ぶパズルゲームです。627 x 839</p>
+      <p>Twitterの投稿画像で遊ぶパズルゲームです。</p>
     </header>
     <main>{children}</main>
     <footer css={footerStle}>

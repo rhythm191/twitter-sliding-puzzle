@@ -7,18 +7,22 @@ import { indexToPosition } from "../utils/position";
 export interface PiecesState {
   pieceNum: number;
   pieces: Piece[];
+  indexes: number[];
 }
 
 const initialState: PiecesState = {
   pieceNum: 9,
   pieces: [],
+  indexes: [],
 };
 
 export const piecesReducer = reducerWithInitialState(initialState)
   .case(actions.initPieces, state => {
     const pieces: Piece[] = [];
+    const indexes: number[] = [];
 
     for (let i = 0; i < state.pieceNum; i++) {
+      indexes.push(i);
       pieces.push({
         id: uuid(),
         originPosition: indexToPosition(i, state.pieceNum),
@@ -30,12 +34,13 @@ export const piecesReducer = reducerWithInitialState(initialState)
 
     return {
       ...state,
-      pieces: pieces,
+      pieces,
+      indexes,
     };
   })
   .case(actions.random, state => {
+    // ランダムなindex列を生成
     const indexes = [...Array(state.pieceNum).keys()];
-
     for (let i = indexes.length - 1; i > 0; i--) {
       const r = Math.floor(Math.random() * (i + 1));
       const tmp = indexes[i];
@@ -43,33 +48,37 @@ export const piecesReducer = reducerWithInitialState(initialState)
       indexes[r] = tmp;
     }
 
-    const newPieces = indexes.map((index, nextIndex) => ({
-      ...state.pieces[index],
-      position: indexToPosition(nextIndex, state.pieceNum),
-      missing: false,
-    }));
+    const pieces = [...state.pieces];
+    indexes.forEach((targetIndex, nextIndex) => {
+      pieces[targetIndex].position = indexToPosition(nextIndex, state.pieceNum);
+      pieces[targetIndex].missing = false;
+    });
 
     // ランダムに空白をつける
     const missingIndex = Math.floor(Math.random() * state.pieceNum);
-    newPieces[missingIndex].missing = true;
+    pieces[missingIndex].missing = true;
 
     return {
       ...state,
-      pieces: newPieces,
+      pieces,
+      indexes,
     };
   })
   .case(actions.debugRandom, state => {
-    const newPieces = [...state.pieces];
-    newPieces[0] = state.pieces[1];
-    newPieces[1] = state.pieces[0];
-    newPieces[0].position = indexToPosition(0, state.pieceNum);
-    newPieces[1].position = indexToPosition(1, state.pieceNum);
+    const pieces = [...state.pieces];
+    const indexes = [...state.indexes];
 
-    newPieces[0].missing = true;
+    [indexes[0], indexes[1]] = [indexes[1], indexes[0]];
+
+    pieces[0].position = indexToPosition(1, state.pieceNum);
+    pieces[1].position = indexToPosition(0, state.pieceNum);
+
+    pieces[0].missing = true;
 
     return {
       ...state,
-      pieces: newPieces,
+      pieces,
+      indexes,
     };
   })
   .case(actions.resetSlideGrant, state => {
@@ -83,37 +92,39 @@ export const piecesReducer = reducerWithInitialState(initialState)
   })
   .case(actions.grantSlidable, state => {
     const pieces = state.pieces;
+    const indexes = state.indexes;
 
     pieces.forEach(piece => (piece.slideTo = undefined));
 
     const missingIndex = pieces.findIndex(piece => piece.missing);
+    const baseIndex = indexes.findIndex(value => value === missingIndex);
     const puzzleLength = Math.sqrt(state.pieceNum);
 
     if (
-      missingIndex - 1 >= 0 &&
-      pieces[missingIndex - 1].position.y == pieces[missingIndex].position.y
+      baseIndex - 1 >= 0 &&
+      pieces[indexes[baseIndex - 1]].position.y == pieces[indexes[baseIndex]].position.y
     ) {
-      pieces[missingIndex - 1].slideTo = { src: missingIndex - 1, dest: missingIndex };
+      pieces[indexes[baseIndex - 1]].slideTo = { src: baseIndex - 1, dest: baseIndex };
     }
 
     if (
-      missingIndex + 1 < pieces.length &&
-      pieces[missingIndex + 1].position.y == pieces[missingIndex].position.y
+      baseIndex + 1 < pieces.length &&
+      pieces[indexes[baseIndex + 1]].position.y == pieces[indexes[baseIndex]].position.y
     ) {
-      pieces[missingIndex + 1].slideTo = { src: missingIndex + 1, dest: missingIndex };
+      pieces[indexes[baseIndex + 1]].slideTo = { src: baseIndex + 1, dest: baseIndex };
     }
 
-    if (missingIndex - puzzleLength >= 0) {
-      pieces[missingIndex - puzzleLength].slideTo = {
-        src: missingIndex - puzzleLength,
-        dest: missingIndex,
+    if (baseIndex - puzzleLength >= 0) {
+      pieces[indexes[baseIndex - puzzleLength]].slideTo = {
+        src: baseIndex - puzzleLength,
+        dest: baseIndex,
       };
     }
 
-    if (missingIndex + puzzleLength < pieces.length) {
-      pieces[missingIndex + puzzleLength].slideTo = {
-        src: missingIndex + puzzleLength,
-        dest: missingIndex,
+    if (baseIndex + puzzleLength < pieces.length) {
+      pieces[indexes[baseIndex + puzzleLength]].slideTo = {
+        src: baseIndex + puzzleLength,
+        dest: baseIndex,
       };
     }
     return {
@@ -122,15 +133,17 @@ export const piecesReducer = reducerWithInitialState(initialState)
     };
   })
   .case(actions.swap, (state, payload) => {
-    const newPieces = [...state.pieces];
-    newPieces[payload.src] = state.pieces[payload.dest];
-    newPieces[payload.dest] = state.pieces[payload.src];
-    newPieces[payload.src].position = indexToPosition(payload.src, state.pieceNum);
-    newPieces[payload.dest].position = indexToPosition(payload.dest, state.pieceNum);
+    const pieces = [...state.pieces];
+    const indexes = [...state.indexes];
+
+    [indexes[payload.src], indexes[payload.dest]] = [indexes[payload.dest], indexes[payload.src]];
+    pieces[indexes[payload.src]].position = indexToPosition(payload.src, state.pieceNum);
+    pieces[indexes[payload.dest]].position = indexToPosition(payload.dest, state.pieceNum);
 
     return {
       ...state,
-      pieces: newPieces,
+      pieces,
+      indexes,
     };
   })
   .case(actions.complete, state => {

@@ -1,16 +1,16 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { shallow } from "enzyme";
 import { Commands } from "@/components/Commands";
 
+jest.mock("@/actions/puzzle");
+jest.mock("react-redux");
+const useDispatchMock = useDispatch as jest.Mock;
+
 test("handleDebugInit", () => {
   const handleDebugInitMock = jest.fn();
-  const command = shallow(
-    <Commands
-      handleDebugInit={handleDebugInitMock}
-      handleinitPieces={() => {}}
-      handleRandom={() => {}}
-    />
-  );
+  useDispatchMock.mockReturnValue(handleDebugInitMock);
+  const command = shallow(<Commands />);
 
   const button = command.find("button").at(0);
   button.simulate("click");
@@ -21,13 +21,8 @@ test("handleDebugInit", () => {
 
 test("handleinitPieces", () => {
   const handleinitPiecesMock = jest.fn();
-  const command = shallow(
-    <Commands
-      handleDebugInit={() => {}}
-      handleinitPieces={handleinitPiecesMock}
-      handleRandom={() => {}}
-    />
-  );
+  useDispatchMock.mockReturnValue(handleinitPiecesMock);
+  const command = shallow(<Commands />);
 
   const button = command.find("button").at(1);
   button.simulate("click");
@@ -38,13 +33,8 @@ test("handleinitPieces", () => {
 
 test("handleinitPieces", () => {
   const handleRandomMock = jest.fn();
-  const command = shallow(
-    <Commands
-      handleDebugInit={() => {}}
-      handleinitPieces={() => {}}
-      handleRandom={handleRandomMock}
-    />
-  );
+  useDispatchMock.mockReturnValue(handleRandomMock);
+  const command = shallow(<Commands />);
 
   const button = command.find("button").at(2);
   button.simulate("click");

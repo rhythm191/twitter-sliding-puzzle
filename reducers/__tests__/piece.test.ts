@@ -66,12 +66,12 @@ describe("grantSlidable", () => {
 
   it("index 1 is slidable", () => {
     const state = reducer(debugState, actions.grantSlidable);
-    expect(state.pieces[1].slideTo).toEqual({ src: 1, dest: 0 });
+    expect(state.pieces[1].slideTo).toEqual({ src: 0, dest: 1 });
   });
 
-  it("index 3 is slidable", () => {
+  it("index 2 is slidable", () => {
     const state = reducer(debugState, actions.grantSlidable);
-    expect(state.pieces[3].slideTo).toEqual({ src: 3, dest: 0 });
+    expect(state.pieces[2].slideTo).toEqual({ src: 2, dest: 1 });
   });
 });
 

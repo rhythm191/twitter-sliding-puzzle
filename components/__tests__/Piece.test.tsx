@@ -101,7 +101,7 @@ describe("Piece", () => {
       <Piece piece={piece} pieceSize={pieceSize} handleSlideTo={handleSlideTotMock} />
     );
 
-    wrapper.find("div").simulate("click");
+    wrapper.find(".piece").simulate("click");
     expect(handleSlideTotMock.mock.calls.length).toBe(1);
   });
 });

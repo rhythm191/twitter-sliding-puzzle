@@ -1,18 +1,6 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
+import { PuzzleState } from "../types/state";
 import * as actions from "../actions/puzzle";
-
-export interface PuzzleState {
-  imageUrl: string;
-  imageSize: {
-    width: number;
-    height: number;
-  };
-  canvas: {
-    width: number;
-    height: number;
-  };
-  complete: boolean;
-}
 
 const initialState: PuzzleState = {
   imageUrl: "http://localhost:3000/sample.jpeg",

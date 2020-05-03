@@ -1,55 +1,45 @@
 /** @jsx jsx */
-import * as React from "react";
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import * as puzzleActions from "../actions/puzzle";
+import React, { useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as pieseActions from "../actions/pieces";
 import { css, jsx } from "@emotion/core";
 import Piece from "./Piece";
-import { AppState } from "../store";
-import { PuzzleState } from "../reducers/puzzle";
+import { AppState } from "../types/state";
 import { SlideTo } from "../types/piece";
 
-const mapStateToProps = (state: AppState): AppState => {
-  return state;
-};
+const Puzzle: React.FunctionComponent = () => {
+  const [puzzle, pieces] = useSelector((state: AppState) => [state.puzzle, state.pieces]);
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    handleSetImage: (imageUrl: string) => dispatch(puzzleActions.setImage(imageUrl)),
-    handleSlideTo: (slideTo: SlideTo) => dispatch(pieseActions.slide(slideTo)),
-  };
-};
-
-interface PuzzleHandler {
-  handleSetImage(imageUrl: string): void;
-  handleSlideTo(slideTo: SlideTo): void;
-}
-
-type Props = AppState & PuzzleHandler;
-
-const puzzleStyle = (puzzle: PuzzleState) => css`
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: 90vh;
-  & .piece {
-    background-image: url(${puzzle.imageUrl});
-    background-size: ${puzzle.canvas.width}px ${puzzle.canvas.height}px;
-  }
-`;
-
-const Puzzle: React.FunctionComponent<Props> = ({ puzzle, pieces, handleSlideTo }) => {
   const pieceSize = {
     width: puzzle.canvas.width / Math.sqrt(pieces.pieceNum),
     height: puzzle.canvas.height / Math.sqrt(pieces.pieceNum),
   };
 
+  const dispatch = useDispatch();
+  const slideCallback = useCallback(
+    (slideTo?: SlideTo) => slideTo && dispatch(pieseActions.slide(slideTo)),
+    [pieces]
+  );
+
   const piecesTags = pieces.pieces.map(piece => (
-    <Piece key={piece.id} piece={piece} pieceSize={pieceSize} handleSlideTo={handleSlideTo} />
+    <Piece key={piece.id} piece={piece} pieceSize={pieceSize} handleSlideTo={slideCallback} />
   ));
 
-  return <div css={puzzleStyle(puzzle)}>{piecesTags}</div>;
+  const puzzleStyle = useMemo(
+    () => css`
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      height: 90vh;
+      & .piece {
+        background-image: url(${puzzle.imageUrl});
+        background-size: ${puzzle.canvas.width}px ${puzzle.canvas.height}px;
+      }
+    `,
+    [puzzle]
+  );
+
+  return <div css={puzzleStyle}>{piecesTags}</div>;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Puzzle);
+export default Puzzle;

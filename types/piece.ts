@@ -15,5 +15,5 @@ export interface Piece {
   originPosition: Position;
   position: Position;
   missing: boolean;
-  slideTo: SlideTo | undefined;
+  slideTo?: SlideTo;
 }

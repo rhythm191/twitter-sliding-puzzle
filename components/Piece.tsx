@@ -1,6 +1,8 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useCallback } from "react";
 import { css, jsx } from "@emotion/core";
+
+import { Action } from "typescript-fsa";
 import { Piece as PieceType, SlideTo } from "../types/piece";
 
 const baseStyle = css`
@@ -34,7 +36,7 @@ type Props = {
     width: number;
     height: number;
   };
-  handleSlideTo: (slideTo: SlideTo) => void | undefined;
+  handleSlideTo: (slideTo?: SlideTo) => Action<SlideTo> | undefined;
 };
 
 export const Piece: React.FunctionComponent<Props> = ({ piece, pieceSize, handleSlideTo }) => {
@@ -44,6 +46,8 @@ export const Piece: React.FunctionComponent<Props> = ({ piece, pieceSize, handle
   let className = "piece";
   if (piece.missing) className += " piece--missing";
   if (piece.slideTo) className += " piece--slidable";
+
+  const clickCallback = useCallback(() => handleSlideTo(piece.slideTo), [piece]);
 
   return (
     <div
@@ -58,7 +62,7 @@ export const Piece: React.FunctionComponent<Props> = ({ piece, pieceSize, handle
         width: ${pieceSize.width}px;
         height: ${pieceSize.height}px;
       `}
-      onClick={() => piece.slideTo && handleSlideTo(piece.slideTo)}
+      onClick={clickCallback}
     ></div>
   );
 };

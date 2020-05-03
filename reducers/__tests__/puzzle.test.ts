@@ -1,4 +1,5 @@
-import { puzzleReducer as reducer, PuzzleState } from "../puzzle";
+import { puzzleReducer as reducer } from "../puzzle";
+import { PuzzleState } from "../../types/state";
 import * as actions from "../../actions/puzzle";
 
 const initialState: PuzzleState = {

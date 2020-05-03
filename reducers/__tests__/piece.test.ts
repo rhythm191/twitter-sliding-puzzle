@@ -5,18 +5,18 @@ import deepEqual from "deep-equal";
 describe("initPieces", () => {
   describe("piece size", () => {
     it("piece size is 9", () => {
-      const state = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+      const state = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
       expect(state.pieces.length).toEqual(9);
     });
 
     it("piece size is 16", () => {
-      const state = reducer({ pieceNum: 16, pieces: [] }, actions.initPieces);
+      const state = reducer({ pieceNum: 16, pieces: [], indexes: [] }, actions.initPieces);
       expect(state.pieces.length).toEqual(16);
     });
   });
 
   describe("initial state is", () => {
-    const state = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+    const state = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
 
     it("original position equal position", () => {
       expect(state.pieces.every(piece => deepEqual(piece.originPosition, piece.position))).toEqual(
@@ -34,7 +34,7 @@ describe("initPieces", () => {
 });
 
 describe("random", () => {
-  const initialState = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+  const initialState = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
 
   it("exists missing piece", () => {
     const state = reducer(initialState, actions.random);
@@ -43,7 +43,7 @@ describe("random", () => {
 });
 
 describe("debugRandom", () => {
-  const initialState = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+  const initialState = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
 
   it("index 0 is missing", () => {
     const state = reducer(initialState, actions.debugRandom);
@@ -52,7 +52,7 @@ describe("debugRandom", () => {
 });
 
 describe("resetSlideGrant", () => {
-  const initialState = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+  const initialState = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
 
   it("all slideTo is undefined", () => {
     const state = reducer(initialState, actions.resetSlideGrant);
@@ -61,7 +61,7 @@ describe("resetSlideGrant", () => {
 });
 
 describe("grantSlidable", () => {
-  const initialState = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+  const initialState = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
   const debugState = reducer(initialState, actions.debugRandom);
 
   it("index 1 is slidable", () => {
@@ -76,7 +76,7 @@ describe("grantSlidable", () => {
 });
 
 describe("swap", () => {
-  const initialState = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+  const initialState = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
   const debugState = reducer(initialState, actions.debugRandom);
 
   it("index 0 is original position", () => {
@@ -95,7 +95,7 @@ describe("swap", () => {
 });
 
 describe("complete", () => {
-  const initialState = reducer({ pieceNum: 9, pieces: [] }, actions.initPieces);
+  const initialState = reducer({ pieceNum: 9, pieces: [], indexes: [] }, actions.initPieces);
   const debugState = reducer(initialState, actions.debugRandom);
   const completeState = reducer(debugState, actions.swap({ src: 1, dest: 0 }));
 

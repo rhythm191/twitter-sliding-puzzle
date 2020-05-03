@@ -1,6 +1,6 @@
 import * as React from "react";
 import { shallow } from "enzyme";
-import { Commands } from "../Commands";
+import { Commands } from "@/components/Commands";
 
 test("handleDebugInit", () => {
   const handleDebugInitMock = jest.fn();

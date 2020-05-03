@@ -1,8 +1,8 @@
 import { put, takeEvery, select } from "redux-saga/effects";
 import deepEqual from "deep-equal";
-import * as puzzleActions from "../actions/puzzle";
-import * as picesActions from "../actions/pieces";
-import { Piece } from "../types/piece";
+import * as puzzleActions from "@/actions/puzzle";
+import * as picesActions from "@/actions/pieces";
+import { Piece } from "@/types/piece";
 
 interface SwapAction {
   type: string;

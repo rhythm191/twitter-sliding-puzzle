@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import * as actions from "../actions/puzzle";
+import * as actions from "@/actions/puzzle";
 import { css, jsx } from "@emotion/core";
 
 const commandStyle = css`

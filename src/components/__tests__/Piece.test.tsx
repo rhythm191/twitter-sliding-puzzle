@@ -1,6 +1,6 @@
 import * as React from "react";
 import { shallow } from "enzyme";
-import { Piece } from "../Piece";
+import { Piece } from "@/components/Piece";
 
 describe("Piece", () => {
   const handleSlideTotMock = jest.fn();

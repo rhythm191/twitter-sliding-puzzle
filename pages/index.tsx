@@ -1,10 +1,10 @@
 import * as React from "react";
-import Layout from "../components/Layout";
-import Puzzle from "../components/Puzzle";
+import Layout from "@/components/Layout";
+import Puzzle from "@/components/Puzzle";
 import { NextPage } from "next";
-import configureStore from "../store";
+import configureStore from "@/store";
 import { Provider } from "react-redux";
-import Commands from "../components/Commands";
+import Commands from "@/components/Commands";
 
 const store = configureStore();
 

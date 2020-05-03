@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
-import * as puzzleAction from "../actions/puzzle";
-import * as piecesAction from "../actions/pieces";
+import * as puzzleAction from "@/actions/puzzle";
+import * as piecesAction from "@/actions/pieces";
 
 function* initializePuzzle() {
   yield put(piecesAction.initPieces());

@@ -1,6 +1,6 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
-import { PuzzleState } from "../types/state";
-import * as actions from "../actions/puzzle";
+import { PuzzleState } from "@/types/state";
+import * as actions from "@/actions/puzzle";
 
 const initialState: PuzzleState = {
   imageUrl: "http://localhost:3000/sample.jpeg",

@@ -1,9 +1,9 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
-import * as actions from "../actions/pieces";
-import { Piece } from "../types/piece";
-import { PiecesState } from "../types/state";
+import * as actions from "@/actions/pieces";
+import { Piece } from "@/types/piece";
+import { PiecesState } from "@/types/state";
 import uuid from "uuid/v4";
-import { indexToPosition } from "../utils/position";
+import { indexToPosition } from "@/utils/position";
 
 const initialState: PiecesState = {
   pieceNum: 9,

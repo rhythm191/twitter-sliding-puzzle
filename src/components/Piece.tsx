@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { Action } from "typescript-fsa";
-import { Piece as PieceType, SlideTo } from "../types/piece";
+import { Piece as PieceType, SlideTo } from "@/types/piece";
 
 const baseStyle = css`
   box-sizing: border-box;

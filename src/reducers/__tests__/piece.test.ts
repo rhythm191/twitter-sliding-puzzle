@@ -1,5 +1,5 @@
-import { piecesReducer as reducer } from "../piece";
-import * as actions from "../../actions/pieces";
+import { piecesReducer as reducer } from "@/reducers/piece";
+import * as actions from "@/actions/pieces";
 import deepEqual from "deep-equal";
 
 describe("initPieces", () => {

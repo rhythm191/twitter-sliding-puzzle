@@ -1,5 +1,5 @@
 // ポジション系のutil関数
-import { Position } from "../types/piece";
+import { Position } from "@/types/piece";
 
 export function verticalNumber(index: number, puzzleSize: number): number {
   return Math.floor(index / Math.sqrt(puzzleSize));

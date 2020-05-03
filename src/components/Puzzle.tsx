@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import React, { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as pieseActions from "../actions/pieces";
+import * as pieseActions from "@/actions/pieces";
 import { css, jsx } from "@emotion/core";
 import Piece from "./Piece";
-import { AppState } from "../types/state";
-import { SlideTo } from "../types/piece";
+import { AppState } from "@/types/state";
+import { SlideTo } from "@/types/piece";
 
 const Puzzle: React.FunctionComponent = () => {
   const [puzzle, pieces] = useSelector((state: AppState) => [state.puzzle, state.pieces]);

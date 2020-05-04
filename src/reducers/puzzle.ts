@@ -9,8 +9,8 @@ const initialState: PuzzleState = {
     height: 2048,
   },
   canvas: {
-    width: 627,
-    height: 840,
+    width: 768,
+    height: 710,
   },
   complete: false,
 };

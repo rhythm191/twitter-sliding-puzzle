@@ -29,8 +29,9 @@ const Puzzle: React.FunctionComponent = () => {
     () => css`
       position: relative;
       width: 100%;
-      max-width: 100%;
-      height: 90vh;
+      height: 100%;
+      justify-self: stretch;
+
       & .piece {
         background-image: url(${puzzle.imageUrl});
         background-size: ${puzzle.canvas.width}px ${puzzle.canvas.height}px;

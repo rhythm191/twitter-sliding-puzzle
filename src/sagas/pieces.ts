@@ -16,9 +16,9 @@ function* slidePieces(action: SwapAction) {
   yield put(picesActions.swap(action.payload));
   yield put(picesActions.resetSlideGrant());
 
-  const pieces: Piece[] = yield select(state => state.pieces.pieces);
+  const pieces: Piece[] = yield select((state) => state.pieces.pieces);
 
-  if (pieces.every(piece => deepEqual(piece.originPosition, piece.position))) {
+  if (pieces.every((piece) => deepEqual(piece.originPosition, piece.position))) {
     yield put(puzzleActions.complete());
     yield put(picesActions.complete());
   } else {

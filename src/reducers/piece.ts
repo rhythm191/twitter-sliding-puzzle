@@ -2,7 +2,7 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 import * as actions from "@/actions/pieces";
 import { Piece } from "@/types/piece";
 import { PiecesState } from "@/types/state";
-import uuid from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 import { indexToPosition } from "@/utils/position";
 
 const initialState: PiecesState = {
@@ -19,7 +19,7 @@ export const piecesReducer = reducerWithInitialState(initialState)
     for (let i = 0; i < state.pieceNum; i++) {
       indexes.push(i);
       pieces.push({
-        id: uuid(),
+        id: uuidv4(),
         originPosition: indexToPosition(i, state.pieceNum),
         position: indexToPosition(i, state.pieceNum),
         missing: false,

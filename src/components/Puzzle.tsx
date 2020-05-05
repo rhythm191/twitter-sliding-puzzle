@@ -24,17 +24,17 @@ const Puzzle: React.FunctionComponent = () => {
   );
 
   // canvas size
-  const canvasEl = useRef(null);
+  const canvasEl = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (canvasEl.current) {
-      const current: any = canvasEl.current;
+      const current = canvasEl.current;
       dispatch(
-        puzzleActions.setCanvas({ width: current.offsetWidth, height: current.offsetHeight })
+        puzzleActions.setCanvas({ width: current.offsetWidth, height: current.offsetWidth })
       );
     }
 
     function handleResizeCanvas(): void {
-      const current: any = canvasEl.current;
+      const current = canvasEl.current;
       if (current) {
         const wrapperSize = {
           width: window.innerWidth <= current.offsetWidth ? window.innerWidth : current.offsetWidth,
@@ -53,7 +53,8 @@ const Puzzle: React.FunctionComponent = () => {
     };
   }, [canvasEl.current]);
 
-  const piecesTags = pieces.pieces.map(piece => (
+  // piece tag list
+  const piecesTags = pieces.pieces.map((piece) => (
     <Piece key={piece.id} piece={piece} pieceSize={pieceSize} handleSlideTo={slideCallback} />
   ));
 

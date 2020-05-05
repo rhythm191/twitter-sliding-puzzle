@@ -11,7 +11,7 @@ const baseStyle = css`
   top: 0;
   left: 0;
   border: 2px solid #ccc;
-  transition: transform 0.2s ease-out;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
   z-index: 10;
 
   &.piece--missing {
@@ -47,7 +47,7 @@ export const Piece: React.FunctionComponent<Props> = ({ piece, pieceSize, handle
   if (piece.missing) className += " piece--missing";
   if (piece.slideTo) className += " piece--slidable";
 
-  const clickCallback = useCallback(() => handleSlideTo(piece.slideTo), [piece]);
+  const clickCallback = useCallback(() => handleSlideTo(piece.slideTo), [piece.slideTo]);
 
   return (
     <div

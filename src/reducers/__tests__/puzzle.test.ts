@@ -8,6 +8,10 @@ const initialState: PuzzleState = {
     width: 1536,
     height: 2048,
   },
+  wrapperSize: {
+    width: 627,
+    height: 840,
+  },
   canvas: {
     width: 627,
     height: 840,

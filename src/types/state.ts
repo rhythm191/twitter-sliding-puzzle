@@ -7,17 +7,17 @@ export interface PiecesState {
   indexes: number[];
 }
 
+export interface ElementSize {
+  width: number;
+  height: number;
+}
+
 // Puzzle state
 export interface PuzzleState {
   imageUrl: string;
-  imageSize: {
-    width: number;
-    height: number;
-  };
-  canvas: {
-    width: number;
-    height: number;
-  };
+  imageSize: ElementSize;
+  wrapperSize: ElementSize;
+  canvas: ElementSize;
   complete: boolean;
 }
 

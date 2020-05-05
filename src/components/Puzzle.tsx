@@ -1,6 +1,7 @@
 /** @jsx jsx */
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as puzzleActions from "@/actions/puzzle";
 import * as pieseActions from "@/actions/pieces";
 import { css, jsx } from "@emotion/core";
 import Piece from "./Piece";
@@ -15,11 +16,35 @@ const Puzzle: React.FunctionComponent = () => {
     height: puzzle.canvas.height / Math.sqrt(pieces.pieceNum),
   };
 
+  // slide event
   const dispatch = useDispatch();
   const slideCallback = useCallback(
     (slideTo?: SlideTo) => slideTo && dispatch(pieseActions.slide(slideTo)),
     [pieces]
   );
+
+  // canvas size
+  const canvasEl = useRef(null);
+  useEffect(() => {
+    function handleResizeCanvas(): void {
+      const current: any = canvasEl.current;
+      if (current) {
+        const canvasSize = {
+          width: window.innerWidth <= current.offsetWidth ? window.innerWidth : current.offseWidth,
+          height:
+            window.innerHeight <= current.offsetHeight ? window.innerHeight : current.offsetHeight,
+        };
+
+        dispatch(puzzleActions.setCanvas(canvasSize));
+      }
+    }
+
+    window.addEventListener("resize", handleResizeCanvas);
+
+    return (): void => {
+      window.removeEventListener("resize", handleResizeCanvas);
+    };
+  }, [canvasEl.current]);
 
   const piecesTags = pieces.pieces.map(piece => (
     <Piece key={piece.id} piece={piece} pieceSize={pieceSize} handleSlideTo={slideCallback} />
@@ -27,10 +52,20 @@ const Puzzle: React.FunctionComponent = () => {
 
   const puzzleStyle = useMemo(
     () => css`
-      position: relative;
       width: 100%;
+      max-width: 100%;
       height: 100%;
+      max-height: 100%;
+      overflow: hidden;
       justify-self: stretch;
+
+      > div {
+        position: relative;
+        margin: 0 auto;
+        width: ${puzzle.canvas.width}px;
+        max-width: 100%;
+        height: 100%;
+      }
 
       & .piece {
         background-image: url(${puzzle.imageUrl});
@@ -40,7 +75,11 @@ const Puzzle: React.FunctionComponent = () => {
     [puzzle]
   );
 
-  return <div css={puzzleStyle}>{piecesTags}</div>;
+  return (
+    <div ref={canvasEl} css={puzzleStyle}>
+      <div>{piecesTags}</div>
+    </div>
+  );
 };
 
 export default Puzzle;

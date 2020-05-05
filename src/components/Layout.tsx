@@ -14,6 +14,7 @@ const pageStyle = css`
   width: 100%;
 
   @media (min-width: 768px) {
+    font-size: 16px;
     width: 768px;
   }
 

@@ -1,4 +1,4 @@
-import { indexToPosition, positionToIndex } from "./position";
+import { indexToPosition, positionToIndex } from "../position";
 
 describe("indexToPosition", () => {
   it("index 0 => (0, 0)", () => {

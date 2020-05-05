@@ -8,8 +8,12 @@ const initialState: PuzzleState = {
     width: 1536,
     height: 2048,
   },
-  canvas: {
+  wrapperSize: {
     width: 768,
+    height: 710,
+  },
+  canvas: {
+    width: (1536 * 768) / 2048,
     height: 710,
   },
   complete: false,
@@ -30,6 +34,45 @@ export const puzzleReducer = reducerWithInitialState(initialState)
       imageUrl: payload,
       imageSize,
       complete: false,
+    };
+  })
+  .case(actions.setCanvas, (state, payload) => {
+    console.log("canvas resize", {
+      width: payload.width,
+      height: payload.height,
+    });
+
+    let canvas;
+
+    if (state.imageSize.width < payload.width && state.imageSize.height < payload.height) {
+      canvas = {
+        width: state.imageSize.width,
+        height: state.imageSize.height,
+      };
+    } else if (state.imageSize.width - payload.width > state.imageSize.height - payload.height) {
+      const width = (state.imageSize.width * payload.height) / state.imageSize.height;
+      canvas = {
+        width: width,
+        height: (state.imageSize.height * payload.width) / state.imageSize.width,
+      };
+
+      console.log("canvas width long resize", canvas);
+    } else {
+      const width = (state.imageSize.width * payload.height) / state.imageSize.height;
+      canvas = {
+        width: payload.width < width ? payload.width : width,
+        height: payload.height,
+      };
+      console.log("canvas height long resize", canvas);
+    }
+
+    return {
+      ...state,
+      wrapperSize: {
+        width: payload.width,
+        height: payload.height,
+      },
+      canvas,
     };
   })
   .case(actions.complete, state => {

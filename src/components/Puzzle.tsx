@@ -26,16 +26,23 @@ const Puzzle: React.FunctionComponent = () => {
   // canvas size
   const canvasEl = useRef(null);
   useEffect(() => {
+    if (canvasEl.current) {
+      const current: any = canvasEl.current;
+      dispatch(
+        puzzleActions.setCanvas({ width: current.offsetWidth, height: current.offsetHeight })
+      );
+    }
+
     function handleResizeCanvas(): void {
       const current: any = canvasEl.current;
       if (current) {
-        const canvasSize = {
-          width: window.innerWidth <= current.offsetWidth ? window.innerWidth : current.offseWidth,
+        const wrapperSize = {
+          width: window.innerWidth <= current.offsetWidth ? window.innerWidth : current.offsetWidth,
           height:
             window.innerHeight <= current.offsetHeight ? window.innerHeight : current.offsetHeight,
         };
 
-        dispatch(puzzleActions.setCanvas(canvasSize));
+        dispatch(puzzleActions.setCanvas(wrapperSize));
       }
     }
 

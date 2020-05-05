@@ -5,23 +5,33 @@ import * as actions from "@/actions/puzzle";
 const initialState: PuzzleState = {
   imageUrl: "http://localhost:3000/sample.jpeg",
   imageSize: {
-    width: 1536,
-    height: 2048,
+    width: 100,
+    height: 100,
   },
   wrapperSize: {
-    width: 627,
-    height: 840,
+    width: 50,
+    height: 50,
   },
   canvas: {
-    width: 627,
-    height: 840,
+    width: 50,
+    height: 50,
   },
   complete: false,
 };
 
-describe("complete", () => {
-  it("complete flag is true", () => {
-    const state = reducer(initialState, actions.complete);
-    expect(state.complete).toEqual(true);
+describe("puzzle reducers test", () => {
+  describe("canvas", () => {
+    it("wrapper and canvas size update", () => {
+      const satte = reducer(initialState, actions.setCanvas({ width: 200, height: 200 }));
+      expect(satte.wrapperSize).toEqual({ width: 200, height: 200 });
+      expect(satte.canvas).toEqual({ width: 100, height: 100 });
+    });
+  });
+
+  describe("complete", () => {
+    it("complete flag is true", () => {
+      const state = reducer(initialState, actions.complete);
+      expect(state.complete).toEqual(true);
+    });
   });
 });
